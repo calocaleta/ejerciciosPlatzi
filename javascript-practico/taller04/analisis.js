@@ -10,8 +10,12 @@ const salariosColSorted = salariosCol.sort(
     }
 );
 
+// Helpers
 function esPar(numero)  {return (numero % 2 === 0);}
 
+// Calculadora de mediana
+
+//Mediana General
 function medianaSalarios(lista){
     const mitad = parseInt(lista.length / 2);
     let personaMitad;
@@ -26,6 +30,20 @@ function medianaSalarios(lista){
     }
 }
 
-console.log(
-    medianaSalarios(salariosColSorted)
+const medianaGeneralCol =  medianaSalarios(salariosColSorted);
+
+// Mediana del top 10%
+//const arrayEjemplo = [0,1,2,3,4,5,6,7,8,9,10];
+const spliceStart = (salariosColSorted.length * 90 / 100);
+const spliceCount = salariosColSorted.length - spliceStart;
+
+const salariosColTop10 = salariosColSorted.splice(spliceStart,spliceCount);
+
+const medianaTop10Col = medianaSalarios(salariosColTop10);
+
+
+console.log({
+    medianaGeneralCol,
+    medianaTop10Col,
+    }
 );
