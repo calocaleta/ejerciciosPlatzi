@@ -1,0 +1,19 @@
+{
+    "name": "calocaleta/php-frameworks",
+    "description": "Proyecto basic",
+    "authors": [
+        {
+            "name": "Carlos Alfonso Garcia Gonzales",
+            "email": "cgarcia@stsac.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        },
+        "files": [
+            "app/helpers.php"
+        ]
+    }
+}
