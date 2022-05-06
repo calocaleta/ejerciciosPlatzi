@@ -1,0 +1,15 @@
+{
+  "name": "electron",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "Carlos A. Garcia Gonzales <cgarcia@stsac.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^18.2.0"
+  }
+}
