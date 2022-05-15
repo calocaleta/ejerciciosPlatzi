@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 
 const initialState = {
     cart: [],
@@ -14,10 +14,10 @@ const useInitialState = () => {
         });
     };
 
-    return (
+    return {
         state,
         addToCart
-    );
+    };
 };
 
 export default useInitialState;
