@@ -1,3 +1,10 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './routes/App';
+
+ReactDOM.render(<App/>, document.getElementById('app'));
+
+/*
 // Arrow Function
 const fibonacci = (fin) => {
     fibonacci_rec(1,1,0,fin);
@@ -13,3 +20,6 @@ const fibonacci_rec = (v1,v2,act,fin) => {
 
 
 fibonacci(15);
+
+
+*/
