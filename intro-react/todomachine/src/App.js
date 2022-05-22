@@ -10,6 +10,7 @@ const todos = [
   { text: 'Cortar cebolla', completed: false},
   { text: 'Tomar el cursso de intro a React', completed: false},
   { text: 'Otra tarea interesante', completed: false},
+  { text: 'Ejemplo 3', completed: true},
 ];
 
 
@@ -21,7 +22,11 @@ function App(props) {
       
       <TodoList>
         {todos.map(todo => (
-          <TodoItem key={todo.text} text={todo.text} />
+          <TodoItem
+            key={todo.text}
+            text={todo.text}
+            completed={todo.completed}
+          />
         ))}
         
       </TodoList>
@@ -32,3 +37,4 @@ function App(props) {
 }
 
 export default App;
+
