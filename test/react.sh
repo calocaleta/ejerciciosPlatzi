@@ -7,18 +7,81 @@ npm install react react-dom
 mkdir public
 mkdir src
 cd src
+mkdir assets
 mkdir components
-cd components
+mkdir containers
+mkdir context
+mkdir hooks
+mkdir pages
+mkdir routes
+mkdir styles
 
-ARCHIVO=App.jsx
+cd context
+ARCHIVO=AppContext.js
 touch $ARCHIVO
 echo "import React from 'react';" >> $ARCHIVO
 echo "" >> $ARCHIVO
-echo "const App = () => {" >> $ARCHIVO
+echo "const AppContext = React.createContext({});" >> $ARCHIVO
+echo "" >> $ARCHIVO
+echo "export default AppContext;" >> $ARCHIVO
+cd ..
+
+cd hooks
+ARCHIVO=useInitialState.js
+touch $ARCHIVO
+echo 'import { useState } from "react";' >> $ARCHIVO
+echo "" >> $ARCHIVO
+echo "const initialState = {" >> $ARCHIVO
+echo "" >> $ARCHIVO
+echo "}" >> $ARCHIVO
+echo "" >> $ARCHIVO
+echo "const useInitialState = () => {" >> $ARCHIVO
+echo "	const [state, setState] = useState(initialState);" >> $ARCHIVO
+echo "" >> $ARCHIVO
+echo "	return {" >> $ARCHIVO
+echo "		state," >> $ARCHIVO
+echo "	}" >> $ARCHIVO
+echo "}" >> $ARCHIVO
+echo "" >> $ARCHIVO
+echo "export default useInitialState;" >> $ARCHIVO
+cd ..
+
+cd pages
+ARCHIVO=Home.jsx
+touch $ARCHIVO
+echo "import React from 'react';" >> $ARCHIVO
+echo "" >> $ARCHIVO
+echo "const Home = () => {" >> $ARCHIVO
 echo "    return (" >> $ARCHIVO
 echo "        <div>" >> $ARCHIVO
 echo "            <h1>Hola Mundo</h1>" >> $ARCHIVO
 echo "        </div>" >> $ARCHIVO
+echo "    );" >> $ARCHIVO
+echo "};" >> $ARCHIVO
+echo "" >> $ARCHIVO
+echo "export default Home;" >> $ARCHIVO
+cd ..
+
+cd routes
+ARCHIVO=App.jsx
+touch $ARCHIVO
+echo "import React from 'react';" >> $ARCHIVO
+echo "import { BrowserRouter, Routes, Route } from 'react-router-dom';" >> $ARCHIVO
+echo "import AppContext from '@context/AppContext';" >> $ARCHIVO
+echo "import Home from '@pages/Home';" >> $ARCHIVO
+echo "import useInitialState from '@hooks/useInitialState';" >> $ARCHIVO
+echo "" >> $ARCHIVO
+echo "const App = () => {" >> $ARCHIVO
+echo "    const initialState = useInitialState();" >> $ARCHIVO
+echo "    return (" >> $ARCHIVO
+echo "        <AppContext.Provider value={initialState}>" >> $ARCHIVO
+echo "            <BrowserRouter>" >> $ARCHIVO
+echo "                <Routes>" >> $ARCHIVO
+echo '                    <Route exact path="/" element={<Home/>} />' >> $ARCHIVO
+echo '                    <Route path="*" element={<Home/>} />' >> $ARCHIVO
+echo "                </Routes>" >> $ARCHIVO
+echo "            </BrowserRouter>" >> $ARCHIVO
+echo "        </AppContext.Provider>" >> $ARCHIVO
 echo "    );" >> $ARCHIVO
 echo "};" >> $ARCHIVO
 echo "" >> $ARCHIVO
@@ -29,7 +92,7 @@ ARCHIVO=index.js
 touch $ARCHIVO
 echo "import React from 'react';" >> $ARCHIVO
 echo "import ReactDOM from 'react-dom';" >> $ARCHIVO
-echo "import App from './components/App';" >> $ARCHIVO
+echo "import App from '@routes/App';" >> $ARCHIVO
 echo "" >> $ARCHIVO
 echo "ReactDOM.render(<App />, document.getElementById('app'));" >> $ARCHIVO
 
@@ -67,7 +130,7 @@ echo '    "presets": [' >> $ARCHIVO
 echo '        "@babel/preset-env",' >> $ARCHIVO
 echo '        "@babel/preset-react"' >> $ARCHIVO
 echo '    ]' >> $ARCHIVO
-#echo '    "plugins": [' >> $ARCHIVO
+#echo '    ",plugins": [' >> $ARCHIVO
 #echo '        "@babel/plugin-transform-runtime"' >> $ARCHIVO
 #echo '    ]' >> $ARCHIVO
 echo '}' >> $ARCHIVO
@@ -76,6 +139,7 @@ ARCHIVO=webpack.config.js
 touch $ARCHIVO
 echo "const path = require('path');" >> $ARCHIVO
 echo "const HtmlWebpackPlugin = require('html-webpack-plugin');" >> $ARCHIVO
+echo "const MiniCssExtractPlugin = require('mini-css-extract-plugin');" >> $ARCHIVO
 echo "" >> $ARCHIVO
 echo "module.exports = {" >> $ARCHIVO
 echo "    entry: './src/index.js'," >> $ARCHIVO
@@ -85,7 +149,16 @@ echo "        filename: 'bundle.js'," >> $ARCHIVO
 echo "    }," >> $ARCHIVO
 echo "	mode: 'development'," >> $ARCHIVO
 echo "    resolve: {" >> $ARCHIVO
-echo "        extensions:['.js','.jsx']" >> $ARCHIVO
+echo "        extensions:['.js','.jsx']," >> $ARCHIVO
+echo "        alias: {" >> $ARCHIVO
+echo "            '@components': path.resolve(__dirname,'src/components')," >> $ARCHIVO
+echo "            '@containers': path.resolve(__dirname,'src/containers')," >> $ARCHIVO
+echo "            '@context': path.resolve(__dirname,'src/context')," >> $ARCHIVO
+echo "            '@hooks': path.resolve(__dirname,'src/hooks')," >> $ARCHIVO
+echo "            '@pages': path.resolve(__dirname,'src/pages')," >> $ARCHIVO
+echo "            '@routes': path.resolve(__dirname,'src/routes')," >> $ARCHIVO
+echo "            '@styles': path.resolve(__dirname,'src/styles')," >> $ARCHIVO
+echo "        }" >> $ARCHIVO
 echo "    }," >> $ARCHIVO
 echo "    module: {" >> $ARCHIVO
 echo "        rules : [" >> $ARCHIVO
@@ -97,23 +170,49 @@ echo "            }," >> $ARCHIVO
 echo "            {" >> $ARCHIVO
 echo "                test: /\.html$/," >> $ARCHIVO
 echo "                use: [{ loader: 'html-loader'}]" >> $ARCHIVO
-echo "           }" >> $ARCHIVO
+echo "            }," >> $ARCHIVO
+echo "            {" >> $ARCHIVO
+echo "                test: /\.(css|scss)$/," >> $ARCHIVO
+echo "                use: [" >> $ARCHIVO
+echo '                    "style-loader",' >> $ARCHIVO
+echo '                    "css-loader",' >> $ARCHIVO
+echo '                    "sass-loader",' >> $ARCHIVO
+echo "                ]," >> $ARCHIVO
+echo "            }," >> $ARCHIVO
+echo "            {" >> $ARCHIVO
+echo "                test: /\.(png|svg|jpg|gif)$/," >> $ARCHIVO
+echo "                type: 'asset'" >> $ARCHIVO
+echo "            }," >> $ARCHIVO
 echo "        ]" >> $ARCHIVO
 echo "    }," >> $ARCHIVO
 echo "    plugins: [" >> $ARCHIVO
-echo "        new HtmlWebpackPlugin(" >> $ARCHIVO
-echo "		{ " >> $ARCHIVO
+echo "        new HtmlWebpackPlugin({" >> $ARCHIVO
 echo "      		template: './public/index.html', " >> $ARCHIVO
-echo "    		filename: './index.html'  " >> $ARCHIVO
-echo "		}" >> $ARCHIVO
-echo "	)" >> $ARCHIVO
-echo "	]" >> $ARCHIVO
+echo "      		filename: './index.html'  " >> $ARCHIVO
+echo "        })," >> $ARCHIVO
+echo "        new MiniCssExtractPlugin({" >> $ARCHIVO
+echo "            filename: '[name].css'" >> $ARCHIVO
+echo "        })," >> $ARCHIVO
+echo "    ]," >> $ARCHIVO
+echo "    devServer: {" >> $ARCHIVO
+echo "        static: path.join(__dirname, 'dist')," >> $ARCHIVO
+echo "        compress: true," >> $ARCHIVO
+echo "        historyApiFallback: true," >> $ARCHIVO
+echo "        port: 3005," >> $ARCHIVO
+echo "        open: true," >> $ARCHIVO
+echo "    }," >> $ARCHIVO
 echo "}" >> $ARCHIVO
 
-npm install css-loader --save-dev
-npm install sass --save-dev
-npm i mini-css-extract-plugin --save-dev
-npm install style-loader --save-dev
+npm install react-router-dom
+
+# Para trabajar con Estilos
+npm install mini-css-extract-plugin css-loader style-loader sass sass-loader -D
+
+# Para trabajar con APIs
+npm install @babel/plugin-transform-runtime
+npm install axios
 
 npm set-script start "webpack serve --open"
 npm set-script build "webpack --mode production"
+
+npm run start
