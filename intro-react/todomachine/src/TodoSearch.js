@@ -16,9 +16,7 @@ class Componente extends React.Component{
 }
 */
 
-const TodoSearch = () => {
-    const [searchValue, setSearchValue] = React.useState('');
-
+const TodoSearch = ({searchValue, setSearchValue}) => {
 
     const onSearchValueChange = (event) => {
         console.log(event.target.value);
