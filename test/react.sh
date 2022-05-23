@@ -46,6 +46,22 @@ echo "" >> $ARCHIVO
 echo "export default useInitialState;" >> $ARCHIVO
 cd ..
 
+cd containers
+ARCHIVO=Layout.jsx
+touch $ARCHIVO
+echo "import React from 'react';" >> $ARCHIVO
+echo "" >> $ARCHIVO
+echo "const Layout = ({ children }) => {" >> $ARCHIVO
+echo "    return (" >> $ARCHIVO
+echo "        <div>" >> $ARCHIVO
+echo "            {children}" >> $ARCHIVO
+echo "        </div>" >> $ARCHIVO
+echo "    );" >> $ARCHIVO
+echo "};" >> $ARCHIVO
+echo "" >> $ARCHIVO
+echo "export default Layout;" >> $ARCHIVO
+cd ..
+
 cd pages
 ARCHIVO=Home.jsx
 touch $ARCHIVO
@@ -68,6 +84,7 @@ touch $ARCHIVO
 echo "import React from 'react';" >> $ARCHIVO
 echo "import { BrowserRouter, Routes, Route } from 'react-router-dom';" >> $ARCHIVO
 echo "import AppContext from '@context/AppContext';" >> $ARCHIVO
+echo "import Layout from '@containers/Layout';" >> $ARCHIVO
 echo "import Home from '@pages/Home';" >> $ARCHIVO
 echo "import useInitialState from '@hooks/useInitialState';" >> $ARCHIVO
 echo "" >> $ARCHIVO
@@ -76,10 +93,12 @@ echo "    const initialState = useInitialState();" >> $ARCHIVO
 echo "    return (" >> $ARCHIVO
 echo "        <AppContext.Provider value={initialState}>" >> $ARCHIVO
 echo "            <BrowserRouter>" >> $ARCHIVO
-echo "                <Routes>" >> $ARCHIVO
-echo '                    <Route exact path="/" element={<Home/>} />' >> $ARCHIVO
-echo '                    <Route path="*" element={<Home/>} />' >> $ARCHIVO
-echo "                </Routes>" >> $ARCHIVO
+echo "                <Layout>" >> $ARCHIVO
+echo "                    <Routes>" >> $ARCHIVO
+echo '                        <Route exact path="/" element={<Home/>} />' >> $ARCHIVO
+echo '                        <Route path="*" element={<Home/>} />' >> $ARCHIVO
+echo "                    </Routes>" >> $ARCHIVO
+echo "                </Layout>" >> $ARCHIVO
 echo "            </BrowserRouter>" >> $ARCHIVO
 echo "        </AppContext.Provider>" >> $ARCHIVO
 echo "    );" >> $ARCHIVO
