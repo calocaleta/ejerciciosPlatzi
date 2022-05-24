@@ -3,7 +3,7 @@ import ProductItem from '@components/ProductItem';
 import useGetProducts from '@hooks/useGetProducts';
 import '../styles/ProductList.scss';
 
-const API = 'https://api.escuelajs.co/api/v1/products';
+const API = 'https://stsac.com/test2/info2.json';
 
 const ProductList = () => {
 	const products = useGetProducts(API);
