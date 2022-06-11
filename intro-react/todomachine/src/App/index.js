@@ -9,20 +9,36 @@ const defaultTodos = [
   { text: 'Ejemplo 3', completed: true},
 ];
 
+function useLocalStorage(itemName, initialValue){
+  const localStorageItem = localStorage.getItem(itemName);
+  let parsedItem;
 
-function App() {
-  const localStorageTodos = localStorage.getItem('TODOS_V1');
-  let parsedTodos;
-
-  if(!localStorageTodos){
-    localStorage.setItem('TODOS_V1',JSON.stringify([]));
-    parsedTodos = [];
+  if(!localStorageItem){
+    localStorage.setItem(itemName,JSON.stringify(initialValue));
+    parsedItem = initialValue;
   }
   else{
-    parsedTodos = JSON.parse(localStorageTodos);
+    parsedItem = JSON.parse(localStorageItem);
   }
 
-  const [todos, setTodos] = React.useState(parsedTodos);
+  const [item, setItem] = React.useState(parsedItem);
+
+  const saveItem = (newItem) => {
+    const stringifiedItem = JSON.stringify(newItem);
+    localStorage.setItem(itemName,stringifiedItem);
+    setItem(newItem);
+  }
+
+  return [
+    item,
+    saveItem,
+  ];
+}
+
+function App() {
+  const [todos, saveTodos] = useLocalStorage('TODOS_V1',[]);
+  const [ejemplo, saveEjemplo] = useLocalStorage('NOMBRE','Carlos');
+
   const [searchValue, setSearchValue] = React.useState('');
 
   const completedTodos = todos.filter(todo => todo.completed).length;
@@ -41,11 +57,7 @@ function App() {
     
   }
 
-  const saveTodos = (newTodos) => {
-    const stringifiedTodos = JSON.stringify(newTodos);
-    localStorage.setItem('TODOS_V1',stringifiedTodos);
-    setTodos(newTodos);
-  }
+
 
   const completeTodo = (text) => {
     const todoIndex = todos.findIndex(todo => todo.text === text);
@@ -64,7 +76,8 @@ function App() {
     saveTodos(newTodos);
   };
 
-  return (
+  return [
+    <p>{ejemplo}</p>,
     <AppUI
       totalTodos={totalTodos}
       completedTodos={completedTodos}
@@ -74,7 +87,7 @@ function App() {
       completeTodo={completeTodo}
       deleteTodo={deleteTodo}
     />
-  );
+  ];
 }
 
 export default App;
