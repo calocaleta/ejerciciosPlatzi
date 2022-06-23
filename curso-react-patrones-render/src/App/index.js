@@ -13,6 +13,46 @@ import { CreateTodoButton } from '../CreateTodoButton';
 import { Modal } from '../Modal';
 import { ChangeAlert } from '../ChangeAlert';
 
+function App(){
+  const [state, setState] = React.useState('');
+
+  return (
+    <React.Fragment>
+      <TodoHeader />
+      <TodoList />
+    </React.Fragment>
+  );
+}
+
+function TodoHeader(){
+  return (
+    <React.Fragment>
+      <TodoCounter />
+      <TodoSearch />
+    </React.Fragment>
+  );
+}
+
+function TodoList(){
+  return (
+    <React.Fragment>
+      <TodoItem />
+    </React.Fragment>
+  );
+}
+
+function TodoCounter(){
+  const [state,useState] = React.useContext(TodoProvider);
+  
+  return <p>TodoCounter</p>;
+}
+function TodoSearch(){
+  return <p>TodoSearch</p>;
+}
+function TodoItem(){
+  return <p>TodoItem</p>;
+}
+/*
 function App() {
   const {
     error,
@@ -86,5 +126,5 @@ function App() {
     </React.Fragment>
   );
 }
-
+*/
 export default App;
