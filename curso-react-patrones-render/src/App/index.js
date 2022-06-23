@@ -43,7 +43,6 @@ function TodoList(){
 
 function TodoCounter(){
   const [state,useState] = React.useContext(TodoProvider);
-  
   return <p>TodoCounter</p>;
 }
 function TodoSearch(){
