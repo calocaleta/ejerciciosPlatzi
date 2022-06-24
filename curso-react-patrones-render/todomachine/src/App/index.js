@@ -3,29 +3,33 @@ import React from "react";
 //import {AppUI} from './AppUI';
 
 function App(){
-  const [state, setState] = React.useState('');
+  const [state, setState] = React.useState('[estado compartido]');
 
   return(
     <React.Fragment>
-      <TodoHeader />
-      <TodoList />
+      <TodoHeader>
+        <TodoCounter />
+        <TodoSearch />
+      </TodoHeader>
+      <TodoList>
+        <TodoItem state={state}/>
+      </TodoList>
     </React.Fragment>
   );
 }
 
-function TodoHeader(){
+function TodoHeader({children}){
   return(
-    <React.Fragment>
-      <TodoCounter />
-      <TodoSearch />
-    </React.Fragment>
+    <header>
+      {children}
+    </header>
   );
 }
-function TodoList(){
+function TodoList({children}){
   return(
-    <React.Fragment>
-      <TodoItem/>
-    </React.Fragment>
+    <section className="TodoList-container">
+      {children}
+    </section>
   );
 }
 
@@ -43,10 +47,10 @@ function TodoSearch(){
     </p>
   );
 }
-function TodoItem(){
+function TodoItem({state}){
   return(
     <p>
-      TodoItem
+      TodoItem {state}
     </p>
   );
 }
@@ -61,4 +65,3 @@ function App() {
 */
 
 export default App;
-
