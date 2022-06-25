@@ -1,17 +1,17 @@
 import React from 'react';
 import {useLocalStorage} from './useLocalStorage';
 
-const TodoContext = React.createContext();
+//const TodoContext = React.createContext();
 
-const defaultTodos = [
+
+function useTodos(){
+  const defaultTodos = [
     { text: 'Cortar cebolla', completed: false},
     { text: 'Tomar el cursso de intro a React', completed: false},
     { text: 'Otra tarea interesante', completed: false},
     { text: 'Ejemplo 3', completed: true},
   ];
-
-
-function TodoProvider(props){
+  
     const {
         item: todos,
         saveItem: saveTodos,
@@ -75,24 +75,20 @@ function TodoProvider(props){
       console.log('Render (luego del use effect)')
     */
 
-    return(
-      <TodoContext.Provider value={{
-        loading,
-        error,
-        totalTodos,
-        completedTodos,
-        searchValue,
-        setSearchValue,
-        searchedTodos,
-        addTodo,
-        completeTodo,
-        deleteTodo,
-        openModal,
-        setOpenModal,
-      }}>
-        {props.children}
-      </TodoContext.Provider>  
-    );
+    return {
+      loading,
+      error,
+      totalTodos,
+      completedTodos,
+      searchValue,
+      setSearchValue,
+      searchedTodos,
+      addTodo,
+      completeTodo,
+      deleteTodo,
+      openModal,
+      setOpenModal,
+    };
 }
 
-export {TodoContext, TodoProvider};
+export {useTodos};
