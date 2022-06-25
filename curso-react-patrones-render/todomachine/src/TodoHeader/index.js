@@ -1,22 +1,9 @@
 import React from 'react';
-import {TodoCounter} from '../TodoCounter';
-import {TodoSearch} from '../TodoSearch';
 
-const TodoHeader = ({totalTodos,
-    completedTodos,
-    searchValue,
-    setSearchValue,
-}) => {
+const TodoHeader = ({children}) => {
     return (
         <header>
-            <TodoCounter
-                totalTodos={totalTodos}
-                completedTodos={completedTodos}
-            />
-            <TodoSearch
-                searchValue={searchValue}
-                setSearchValue={setSearchValue}
-            />
+            {children}
         </header>
     );
 };
