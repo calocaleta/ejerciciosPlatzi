@@ -9,6 +9,22 @@ import {TodoForm} from '../TodoForm';
 import {TodoCounter} from '../TodoCounter';
 import {TodoSearch} from '../TodoSearch';
 
+const TodosError = () => {
+  return(
+    <p>Atención, hubo un error!</p>
+  )
+}
+const TodoLoading = () => {
+  return(
+    <p>Estamos cargando, no desesperes...</p>
+  )
+}
+const EmptyTodos = () => {
+  return(
+    <p>Crea tu primer TODO!</p>
+  )
+}
+
 function App() {
   const
     { error,
@@ -39,13 +55,14 @@ function App() {
           />
       </TodoHeader>
       
-
-        <TodoList>
-        {error && <p>Atención, hubo un error!</p>}
-        {loading && <p>Estamos cargando, no desesperes...</p>}
-        {(!loading && !searchedTodos.length) && <p>Crea tu primer TODO!</p>}
-
-        {searchedTodos.map(todo => (
+      <TodoList
+        error={error}
+        loading={loading}
+        searchedTodos={searchedTodos}
+        onError={() => <TodosError />}
+        onLoading={() => <TodoLoading />}
+        onEmptyTodos={() => <EmptyTodos />}
+        render={todo => (
           <TodoItem
             key={todo.text}
             text={todo.text}
@@ -53,9 +70,8 @@ function App() {
             onComplete={() => completeTodo(todo.text)}
             onDelete={() => deleteTodo(todo.text)}
           />
-        ))}
-
-        </TodoList>
+        )}
+      />
         {openModal && (
           <Modal>
             <TodoForm 
