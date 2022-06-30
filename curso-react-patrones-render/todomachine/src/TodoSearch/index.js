@@ -17,7 +17,7 @@ class Componente extends React.Component{
 }
 */
 
-const TodoSearch = ({searchValue, setSearchValue}) => {
+const TodoSearch = ({searchValue, setSearchValue,loading}) => {
 
     const onSearchValueChange = (event) => {
         console.log(event.target.value);
@@ -30,6 +30,7 @@ const TodoSearch = ({searchValue, setSearchValue}) => {
             placeholder="Cebolla"
             value={searchValue}
             onChange={onSearchValueChange}
+            disabled={loading}
         />,
         <p>{searchValue}</p>
     ];

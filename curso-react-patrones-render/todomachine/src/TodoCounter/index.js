@@ -7,7 +7,7 @@ const estilos = {
     backgroundColor: 'yellow',
 };
 
-const TodoCounter = ({totalTodos,completedTodos}) => {
+const TodoCounter = ({totalTodos,completedTodos,loading}) => {
     //const {totalTodos,completedTodos} = React.useContext(TodoContext);
 /*    
     return (
@@ -18,7 +18,9 @@ const TodoCounter = ({totalTodos,completedTodos}) => {
     );
     */
     return (
-        <h2 className='TodoCounter'>Has completado {completedTodos} de {totalTodos} Todos</h2>
+        <h2 className={`TodoCounter${loading && "--loading"}`}>
+            Has completado {completedTodos} de {totalTodos} Todos
+        </h2>
     );
 };
 
