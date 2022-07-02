@@ -8,6 +8,7 @@ import {Modal} from '../Modal';
 import {TodoForm} from '../TodoForm';
 import {TodoCounter} from '../TodoCounter';
 import {TodoSearch} from '../TodoSearch';
+import ChangeAlertWithStorageListener from '../ChangeAlert';
 
 const TodosError = () => {
   return(
@@ -103,6 +104,8 @@ function App() {
       <CreateTodoButton
         setOpenModal={setOpenModal}
       />
+
+      <ChangeAlertWithStorageListener />
     </React.Fragment>
   );
 }
