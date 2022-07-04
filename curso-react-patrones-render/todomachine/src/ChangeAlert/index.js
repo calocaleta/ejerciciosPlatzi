@@ -5,12 +5,18 @@ const ChangeAlert = ({show, toggleShow}) => {
     if(show){
         return (
             <div>
-                Hubo Cambios!
+                <p>Hubo Cambios!</p>
+                <button
+                    onClick={() => toggleShow(false)}
+                >Refrescar la información</button>
             </div>
         );
+    }
+    else {
+        return null;
     }
 };
 
 const ChangeAlertWithStorageListener = withStorageListener(ChangeAlert);
 
-export default ChangeAlert;
+export default ChangeAlertWithStorageListener;
